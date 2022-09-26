@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.data.repository.PicPayRepository
-import com.picpay.desafio.android.data.Resource
-import com.picpay.desafio.android.data.User
+import com.picpay.desafio.android.data.model.Resource
+import com.picpay.desafio.android.data.model.User
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(private val picPayRepository: PicPayRepository) : ViewModel() {
