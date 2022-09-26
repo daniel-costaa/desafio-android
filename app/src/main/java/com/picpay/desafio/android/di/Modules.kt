@@ -2,8 +2,11 @@ package com.picpay.desafio.android.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.data.PicPayRepository
 import com.picpay.desafio.android.data.network.PicPayService
+import com.picpay.desafio.android.ui.MainActivityViewModel
 import okhttp3.OkHttpClient
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,6 +16,14 @@ val networkModule = module {
     factory { provideOkHttp() }
     single { provideRetrofit(get(), get()) }
     factory { providePicPayService(get()) }
+}
+
+val repositoryModule = module {
+    factory { PicPayRepository(get()) }
+}
+
+val viewModelModule = module {
+    viewModel { MainActivityViewModel(get()) }
 }
 
 private fun provideRetrofit(client: OkHttpClient, gsonBuilder: Gson) = Retrofit.Builder()
