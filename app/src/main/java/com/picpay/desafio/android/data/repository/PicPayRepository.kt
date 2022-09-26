@@ -1,5 +1,7 @@
-package com.picpay.desafio.android.data
+package com.picpay.desafio.android.data.repository
 
+import com.picpay.desafio.android.data.Resource
+import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.data.network.PicPayService
 
 class PicPayRepository(private val picPayService: PicPayService) {

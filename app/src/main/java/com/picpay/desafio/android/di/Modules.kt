@@ -2,7 +2,7 @@ package com.picpay.desafio.android.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.data.PicPayRepository
+import com.picpay.desafio.android.data.repository.PicPayRepository
 import com.picpay.desafio.android.data.network.PicPayService
 import com.picpay.desafio.android.ui.MainActivityViewModel
 import okhttp3.OkHttpClient

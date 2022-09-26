@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.picpay.desafio.android.data.PicPayRepository
+import com.picpay.desafio.android.data.repository.PicPayRepository
 import com.picpay.desafio.android.data.Resource
 import com.picpay.desafio.android.data.User
 import kotlinx.coroutines.launch
