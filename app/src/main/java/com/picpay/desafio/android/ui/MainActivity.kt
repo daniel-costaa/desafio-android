@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var userListAdapter: UserListAdapter
     private val viewModel by viewModel<MainActivityViewModel>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
