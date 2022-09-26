@@ -6,44 +6,48 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.PicPayService
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.data.Resource
 import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.UserListAdapter
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.picpay.desafio.android.ui.adapters.UserListAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
+    private val viewModel by viewModel<MainActivityViewModel>()
 
-    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
-
-    private val gson: Gson by lazy { GsonBuilder().create() }
-
-    private val okHttp: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .build()
+    override fun onStart() {
+        super.onStart()
+        setupObservers()
     }
 
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(url)
-            .client(okHttp)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
+    private fun setupObservers() {
+        viewModel.users.observe(this) { resource ->
+            when(resource.status) {
+                Resource.Status.LOADING -> progressBar.visibility = View.VISIBLE
+                Resource.Status.ERROR -> onError()
+                Resource.Status.SUCCESS -> onSuccess(resource.data ?: emptyList())
+            }
+        }
     }
 
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
+    private fun onSuccess(users: List<User>) {
+        progressBar.visibility = View.GONE
+
+        adapter.users = users
+    }
+
+    private fun onError() {
+        val message = getString(R.string.error)
+
+        progressBar.visibility = View.GONE
+        recyclerView.visibility = View.GONE
+
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onResume() {
@@ -56,24 +60,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        progressBar.visibility = View.VISIBLE
-        service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    val message = getString(R.string.error)
-
-                    progressBar.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
-
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    progressBar.visibility = View.GONE
-
-                    adapter.users = response.body()!!
-                }
-            })
+        viewModel.getUsers()
     }
 }
