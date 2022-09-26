@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun setupObservers() {
         viewModel.users.observe(this) { resource ->
-            when(resource.status) {
+            when (resource.status) {
                 Resource.Status.LOADING -> progressBar.visibility = View.VISIBLE
                 Resource.Status.ERROR -> onError()
                 Resource.Status.SUCCESS -> onSuccess(resource.data ?: emptyList())
