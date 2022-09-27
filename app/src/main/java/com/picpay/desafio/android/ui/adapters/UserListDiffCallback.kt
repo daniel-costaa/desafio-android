@@ -21,6 +21,10 @@ class UserListDiffCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].name == newList[newItemPosition].name
+        val isNameEquals = oldList[oldItemPosition].name == newList[newItemPosition].name
+        val isUsernameEquals = oldList[oldItemPosition].username == newList[newItemPosition].username
+        val isImageEquals = oldList[oldItemPosition].img == newList[newItemPosition].img
+
+        return isNameEquals && isUsernameEquals && isImageEquals
     }
 }
