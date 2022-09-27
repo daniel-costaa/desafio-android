@@ -38,9 +38,15 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupListeners()
         setupRecyclerView()
         setupObservers()
-        viewModel.getUsers()
+    }
+
+    private fun setupListeners() {
+        binding.refreshButton.setOnClickListener {
+            viewModel.getUsers()
+        }
     }
 
     private fun setupRecyclerView() {
