@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.data.model.Resource
-import com.picpay.desafio.android.data.model.UserDto
+import com.picpay.desafio.android.data.model.UserDomain
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.ui.adapters.UserListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
-    private fun onSuccess(users: List<UserDto>) {
+    private fun onSuccess(users: List<UserDomain>) {
         binding.userListProgressBar.visibility = View.GONE
 
         userListAdapter.users = users
