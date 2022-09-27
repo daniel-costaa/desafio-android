@@ -45,6 +45,7 @@ class MainFragment : Fragment() {
 
     private fun setupRecyclerView() {
         with(binding.recyclerView) {
+            isNestedScrollingEnabled = false
             userListAdapter = UserListAdapter()
             adapter = userListAdapter
             layoutManager = LinearLayoutManager(requireContext())
