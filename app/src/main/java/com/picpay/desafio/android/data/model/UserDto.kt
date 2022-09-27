@@ -11,3 +11,7 @@ data class UserDto(
     @SerializedName("id") val id: Int,
     @SerializedName("username") val username: String
 ) : Parcelable
+
+
+fun UserDto.toDomain() =
+    UserDomain(img = this.img, name = this.name, id = this.id, username = this.username)
