@@ -55,17 +55,15 @@ class MainFragment : Fragment() {
     private fun setupObservers() {
         viewModel.users.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
-                Resource.Status.LOADING -> binding.userListProgressBar.visibility = View.VISIBLE
+                Resource.Status.LOADING -> onLoading()
                 Resource.Status.ERROR -> onError()
                 Resource.Status.SUCCESS -> onSuccess(resource.data ?: emptyList())
             }
         }
     }
 
-    private fun onSuccess(users: List<UserDomain>) {
-        binding.userListProgressBar.visibility = View.GONE
-
-        userListAdapter.users = users
+    private fun onLoading() {
+        binding.userListProgressBar.visibility = View.VISIBLE
     }
 
     private fun onError() {
@@ -75,5 +73,11 @@ class MainFragment : Fragment() {
         binding.recyclerView.visibility = View.GONE
 
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onSuccess(users: List<UserDomain>) {
+        binding.userListProgressBar.visibility = View.GONE
+
+        userListAdapter.users = users
     }
 }
