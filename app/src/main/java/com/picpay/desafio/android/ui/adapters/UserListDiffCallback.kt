@@ -9,7 +9,7 @@ class UserListDiffCallback(
 ) : DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].username == newList[newItemPosition].username
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
     }
 
     override fun getOldListSize(): Int {
@@ -21,6 +21,6 @@ class UserListDiffCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return true
+        return oldList[oldItemPosition].name == newList[newItemPosition].name
     }
 }
