@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private lateinit var userListAdapter: UserListAdapter
-    private val viewModel by viewModel<MainActivityViewModel>()
+    private val viewModel by viewModel<MainViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

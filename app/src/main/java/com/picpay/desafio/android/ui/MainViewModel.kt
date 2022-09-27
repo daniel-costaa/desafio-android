@@ -9,7 +9,7 @@ import com.picpay.desafio.android.data.model.Resource
 import com.picpay.desafio.android.data.model.UserDomain
 import kotlinx.coroutines.launch
 
-class MainActivityViewModel(private val picPayRepository: PicPayRepository) : ViewModel() {
+class MainViewModel(private val picPayRepository: PicPayRepository) : ViewModel() {
     private val _users = MutableLiveData<Resource<List<UserDomain>>>()
     val users: LiveData<Resource<List<UserDomain>>> = _users
 

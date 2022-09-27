@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.data.repository.PicPayRepository
 import com.picpay.desafio.android.data.network.PicPayService
-import com.picpay.desafio.android.ui.MainActivityViewModel
+import com.picpay.desafio.android.ui.MainViewModel
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,7 +23,7 @@ val repositoryModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { MainActivityViewModel(get()) }
+    viewModel { MainViewModel(get()) }
 }
 
 private fun provideRetrofit(client: OkHttpClient, gsonBuilder: Gson) = Retrofit.Builder()
