@@ -3,7 +3,7 @@ package com.picpay.desafio.android.data.repository
 import com.picpay.desafio.android.data.model.Resource
 import com.picpay.desafio.android.data.model.UserDomain
 import com.picpay.desafio.android.data.model.toDomain
-import com.picpay.desafio.android.data.network.PicPayService
+import com.picpay.desafio.android.data.datasources.PicPayService
 
 class PicPayRepository(private val picPayService: PicPayService) {
     suspend fun getUsers(): Resource<List<UserDomain>> {
