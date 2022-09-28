@@ -1,11 +1,16 @@
 package com.picpay.desafio.android.di
 
+import android.content.Context
+import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.data.dao.UserDao
+import com.picpay.desafio.android.data.datasources.PicPayDatabase
 import com.picpay.desafio.android.data.repository.PicPayRepository
 import com.picpay.desafio.android.data.datasources.PicPayService
 import com.picpay.desafio.android.ui.MainViewModel
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -25,6 +30,19 @@ val repositoryModule = module {
 val viewModelModule = module {
     viewModel { MainViewModel(get()) }
 }
+
+val databaseModule = module {
+    single { provideDb(androidApplication()) }
+    factory { provideDao(get()) }
+}
+
+fun provideDb(context: Context) = Room.databaseBuilder(
+    context,
+    PicPayDatabase::class.java,
+    "picpay-db"
+).build()
+
+fun provideDao(database: PicPayDatabase) = database.userDao()
 
 private fun provideRetrofit(client: OkHttpClient, gsonBuilder: Gson) = Retrofit.Builder()
     .baseUrl(URL)
