@@ -13,5 +13,5 @@ data class UserDto(
 ) : Parcelable
 
 
-fun UserDto.toDomain() =
-    UserDomain(img = this.img, name = this.name, id = this.id, username = this.username)
+fun UserDto.toEntity() =
+    UserEntity(img = this.img, name = this.name, id = this.id, username = this.username)

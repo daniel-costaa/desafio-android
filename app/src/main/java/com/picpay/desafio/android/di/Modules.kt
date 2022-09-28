@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.data.dao.UserDao
 import com.picpay.desafio.android.data.datasources.PicPayDatabase
 import com.picpay.desafio.android.data.repository.PicPayRepository
 import com.picpay.desafio.android.data.datasources.PicPayService
@@ -24,7 +23,7 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    factory { PicPayRepository(get()) }
+    factory { PicPayRepository(get(), get()) }
 }
 
 val viewModelModule = module {

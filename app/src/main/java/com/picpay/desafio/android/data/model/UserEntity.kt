@@ -11,3 +11,6 @@ data class UserEntity(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "username") val username: String
 )
+
+fun UserEntity.toDomain() =
+    UserDomain(img = this.img, name = this.name, id = this.id, username = this.username)

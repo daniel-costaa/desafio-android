@@ -11,5 +11,5 @@ interface UserDao {
     suspend fun getAllUsers(): List<UserEntity>
 
     @Insert
-    fun saveUsers(users: List<UserEntity>)
+    suspend fun saveUsers(users: List<UserEntity>)
 }
