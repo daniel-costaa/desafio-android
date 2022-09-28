@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "user")
 data class UserEntity(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "img") val img: String,
