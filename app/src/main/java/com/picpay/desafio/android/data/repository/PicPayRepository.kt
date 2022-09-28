@@ -2,11 +2,7 @@ package com.picpay.desafio.android.data.repository
 
 import com.picpay.desafio.android.data.dao.UserDao
 import com.picpay.desafio.android.data.datasources.PicPayService
-import com.picpay.desafio.android.data.model.Resource
-import com.picpay.desafio.android.data.model.UserDomain
-import com.picpay.desafio.android.data.model.UserEntity
-import com.picpay.desafio.android.data.model.toDomain
-import com.picpay.desafio.android.data.model.toEntity
+import com.picpay.desafio.android.data.model.*
 
 class PicPayRepository(private val picPayService: PicPayService, private val userDao: UserDao) {
 
@@ -15,25 +11,26 @@ class PicPayRepository(private val picPayService: PicPayService, private val use
 
         if (cachedUsers.isEmpty()) {
             try {
-                getRemoteUsers()
+                saveRemoteUsers(getRemoteUsers())
                 cachedUsers = userDao.getAllUsers()
             } catch (e: Exception) {
                 return Resource.error(e.message.toString(), null)
             }
         }
 
-        return getLocalUsers(cachedUsers)
+        return mapCachedUsersToDomain(cachedUsers)
     }
 
-    private fun getLocalUsers(cachedUsers: List<UserEntity>): Resource<List<UserDomain>> {
+    private suspend fun getRemoteUsers() = picPayService.getUsers()
+
+    private suspend fun saveRemoteUsers(remoteUsers: List<UserDto>) {
+        val mappedUsers = remoteUsers.map { it.toEntity() }
+        userDao.saveUsers(mappedUsers)
+    }
+
+    private fun mapCachedUsersToDomain(cachedUsers: List<UserEntity>): Resource<List<UserDomain>> {
         val users = cachedUsers.map { it.toDomain() }
         return Resource.success(users)
-    }
-
-    private suspend fun getRemoteUsers() {
-        val users = picPayService.getUsers()
-        val mappedUsers = users.map { it.toEntity() }
-        userDao.saveUsers(mappedUsers)
     }
 }
 
